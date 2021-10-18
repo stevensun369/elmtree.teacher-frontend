@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { Form } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import {
-  getHomeroomStudentsList,
+  getHomeroomStudents,
   getHomeroomStudentSubjectsList,
   getSubjectStudentTruancysList,
   motivateTruancy,
@@ -37,7 +37,8 @@ const TeacherHomeroomMotivateTruancy = ({ match, history }) => {
   const teacherHomeroomStudentSubjects = useSelector(
     (state) => state.teacherHomeroomStudentSubjects
   )
-  const { homeroomStudentSubjectsList } = teacherHomeroomStudentSubjects
+  const { homeroomStudentSubjectsList } =
+    teacherHomeroomStudentSubjects
 
   // subject info
   var subjectInfo = sortSubjectInfo(
@@ -96,7 +97,9 @@ const TeacherHomeroomMotivateTruancy = ({ match, history }) => {
     (state) => state.teacherMotivateTruancy
   )
 
-  console.log(Object.keys(teacherMotivateTruancy.motivateTruancy).length !== 0)
+  console.log(
+    Object.keys(teacherMotivateTruancy.motivateTruancy).length !== 0
+  )
 
   const submitHandler = (e) => {
     e.preventDefault()
@@ -113,11 +116,13 @@ const TeacherHomeroomMotivateTruancy = ({ match, history }) => {
       // }
 
       if (homeroomStudentSubjectsList.length === 0) {
-        dispatch(getHomeroomStudentSubjectsList(match.params.studentID))
+        dispatch(
+          getHomeroomStudentSubjectsList(match.params.studentID)
+        )
       }
 
       if (homeroomStudentsList.length === 0) {
-        dispatch(getHomeroomStudentsList())
+        dispatch(getHomeroomStudents())
       }
 
       if (subjectStudentTruancysList.length === 0) {
@@ -139,7 +144,9 @@ const TeacherHomeroomMotivateTruancy = ({ match, history }) => {
   ])
 
   useEffect(() => {
-    if (Object.keys(teacherMotivateTruancy.motivateTruancy).length !== 0) {
+    if (
+      Object.keys(teacherMotivateTruancy.motivateTruancy).length !== 0
+    ) {
       history.push(
         `/diriginte/${match.params.studentID}/${match.params.subjectID}`
       )
@@ -186,7 +193,11 @@ const TeacherHomeroomMotivateTruancy = ({ match, history }) => {
         </div>
       </>
     )
-  } else if (!authorized || !studentAuthorized || !subjectAuthorized) {
+  } else if (
+    !authorized ||
+    !studentAuthorized ||
+    !subjectAuthorized
+  ) {
     return <NotAuthorized />
   }
 }

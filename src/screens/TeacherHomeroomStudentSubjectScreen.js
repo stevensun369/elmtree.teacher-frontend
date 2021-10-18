@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import {
   getSubjectStudentMarksList,
   getSubjectStudentTruancysList,
-  getHomeroomStudentsList,
+  getHomeroomStudents,
   motivateTruancyDelete,
   getHomeroomAverageMarks,
 } from '../actions/teacherActions'
@@ -96,10 +96,10 @@ const TeacherHomeroomStudentSubjectScreen = ({ match, history }) => {
   }
 
   // average marks
-  const teacherHomeroomGetAverage = useSelector(
-    (state) => state.teacherHomeroomGetAverage
+  const teacherHomeroomAverageMarks = useSelector(
+    (state) => state.teacherHomeroomAverageMarks
   )
-  const { averageMarks } = teacherHomeroomGetAverage
+  const { averageMarks } = teacherHomeroomAverageMarks
 
   var studentAverageMarks = averageMarks[match.params.studentID]
   var subjectAverageMarks = {}
@@ -115,13 +115,14 @@ const TeacherHomeroomStudentSubjectScreen = ({ match, history }) => {
     (state) => state.teacherMotivateTruancy
   )
 
-  console.log(Object.keys(teacherMotivateTruancy.motivateTruancy).length)
+  console.log(
+    Object.keys(teacherMotivateTruancy.motivateTruancy).length
+  )
 
   if (authorized && studentAuthorized && subjectAuthorized) {
     // average marks
-    var { averageMarkTermOne, averageMarkTermTwo } = sortAverageMarksByTerm(
-      subjectAverageMarks
-    )
+    var { averageMarkTermOne, averageMarkTermTwo } =
+      sortAverageMarksByTerm(subjectAverageMarks)
 
     // marks by term
     var { marksTermOne, marksTermTwo } = sortMarksByTerm(
@@ -158,11 +159,16 @@ const TeacherHomeroomStudentSubjectScreen = ({ match, history }) => {
         )
       )
     }
-  }, [dispatch, match.params.subjectID, match.params.studentID, authorized])
+  }, [
+    dispatch,
+    match.params.subjectID,
+    match.params.studentID,
+    authorized,
+  ])
 
   useEffect(() => {
     if (homeroomStudentsList.length === 0) {
-      dispatch(getHomeroomStudentsList())
+      dispatch(getHomeroomStudents())
     }
 
     if (
@@ -179,8 +185,8 @@ const TeacherHomeroomStudentSubjectScreen = ({ match, history }) => {
         <HeaderBack backTo={`/diriginte/${match.params.studentID}`}>
           {titleCondition && (
             <>
-              {subjectStudentInfo.lastName} {subjectStudentInfo.firstName} -{' '}
-              {subjectInfo.name}
+              {subjectStudentInfo.lastName}{' '}
+              {subjectStudentInfo.firstName} - {subjectInfo.name}
             </>
           )}
         </HeaderBack>
@@ -221,7 +227,9 @@ const TeacherHomeroomStudentSubjectScreen = ({ match, history }) => {
                     ))}
                   </>
                 ) : (
-                  <span className={styles.notExist}>Nu există note incă</span>
+                  <span className={styles.notExist}>
+                    Nu există note incă
+                  </span>
                 )}
 
                 <br></br>
@@ -277,7 +285,9 @@ const TeacherHomeroomStudentSubjectScreen = ({ match, history }) => {
                     ))}
                   </>
                 ) : (
-                  <span className={styles.notExist}>Nu există note incă</span>
+                  <span className={styles.notExist}>
+                    Nu există note incă
+                  </span>
                 )}
                 <br></br>
 
@@ -305,7 +315,11 @@ const TeacherHomeroomStudentSubjectScreen = ({ match, history }) => {
         </div>
       </>
     )
-  } else if (!authorized || !studentAuthorized || !subjectAuthorized) {
+  } else if (
+    !authorized ||
+    !studentAuthorized ||
+    !subjectAuthorized
+  ) {
     return <NotAuthorized />
   }
 }

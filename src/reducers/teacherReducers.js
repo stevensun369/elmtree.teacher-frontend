@@ -9,12 +9,12 @@ import {
   TEACHER_HOMEROOM_STUDENTS_SUCCESS,
   TEACHER_HOMEROOM_STUDENTS_FAIL,
   TEACHER_HOMEROOM_STUDENTS_DELETE,
-  TEACHER_HOMEROOM_GET_AVERAGE_REQUEST,
-  TEACHER_HOMEROOM_GET_AVERAGE_SUCCESS,
-  TEACHER_HOMEROOM_GET_AVERAGE_FAIL,
-  TEACHER_HOMEROOM_GET_TERM_MARKS_REQUEST,
-  TEACHER_HOMEROOM_GET_TERM_MARKS_SUCCESS,
-  TEACHER_HOMEROOM_GET_TERM_MARKS_FAIL,
+  TEACHER_HOMEROOM_AVERAGE_MARKS_REQUEST,
+  TEACHER_HOMEROOM_AVERAGE_MARKS_SUCCESS,
+  TEACHER_HOMEROOM_AVERAGE_MARKS_FAIL,
+  TEACHER_HOMEROOM_TERM_MARKS_REQUEST,
+  TEACHER_HOMEROOM_TERM_MARKS_SUCCESS,
+  TEACHER_HOMEROOM_TERM_MARKS_FAIL,
   TEACHER_HOMEROOM_ADD_TERM_MARK_REQUEST,
   TEACHER_HOMEROOM_ADD_TERM_MARK_SUCCESS,
   TEACHER_HOMEROOM_ADD_TERM_MARK_FAIL,
@@ -50,10 +50,10 @@ import {
   TEACHER_ADD_AVERAGE_SUCCESS,
   TEACHER_ADD_AVERAGE_FAIL,
   TEACHER_ADD_AVERAGE_DELETE,
-  TEACHER_GET_AVERAGE_REQUEST,
-  TEACHER_GET_AVERAGE_SUCCESS,
-  TEACHER_GET_AVERAGE_FAIL,
-  TEACHER_GET_AVERAGE_DELETE,
+  TEACHER_AVERAGE_MARKS_REQUEST,
+  TEACHER_AVERAGE_MARKS_SUCCESS,
+  TEACHER_AVERAGE_MARKS_FAIL,
+  TEACHER_AVERAGE_MARKS_DELETE,
 } from '../constants/teacherConstants'
 
 export const teacherLoginReducer = (state = {}, action) => {
@@ -146,32 +146,32 @@ export const teacherHomeroomStudentSubjectsReducer = (
   }
 }
 
-export const teacherHomeroomGetAverageReducer = (
+export const teacherHomeroomAverageMarksReducer = (
   state = { averageMarks: {} },
   action
 ) => {
   switch (action.type) {
-    case TEACHER_HOMEROOM_GET_AVERAGE_REQUEST:
+    case TEACHER_HOMEROOM_AVERAGE_MARKS_REQUEST:
       return { loading: true, averageMarks: {} }
-    case TEACHER_HOMEROOM_GET_AVERAGE_SUCCESS:
+    case TEACHER_HOMEROOM_AVERAGE_MARKS_SUCCESS:
       return { loading: false, averageMarks: action.payload }
-    case TEACHER_HOMEROOM_GET_AVERAGE_FAIL:
+    case TEACHER_HOMEROOM_AVERAGE_MARKS_FAIL:
       return { loading: false, error: action.payload }
     default:
       return state
   }
 }
 
-export const teacherHomeroomGetTermMarksReducer = (
+export const teacherHomeroomTermMarksReducer = (
   state = { termMarks: {} },
   action
 ) => {
   switch (action.type) {
-    case TEACHER_HOMEROOM_GET_TERM_MARKS_REQUEST:
+    case TEACHER_HOMEROOM_TERM_MARKS_REQUEST:
       return { loading: true, termMarks: {} }
-    case TEACHER_HOMEROOM_GET_TERM_MARKS_SUCCESS:
+    case TEACHER_HOMEROOM_TERM_MARKS_SUCCESS:
       return { loading: false, termMarks: action.payload }
-    case TEACHER_HOMEROOM_GET_TERM_MARKS_FAIL:
+    case TEACHER_HOMEROOM_TERM_MARKS_FAIL:
       return { loading: false, error: action.payload }
     default:
       return state
@@ -310,18 +310,18 @@ export const teacherAddAverageReducer = (
   }
 }
 
-export const teacherGetAverageReducer = (
+export const teacherAverageMarksReducer = (
   state = { averageMarks: {} },
   action
 ) => {
   switch (action.type) {
-    case TEACHER_GET_AVERAGE_REQUEST:
+    case TEACHER_AVERAGE_MARKS_REQUEST:
       return { loading: true, averageMarks: {} }
-    case TEACHER_GET_AVERAGE_SUCCESS:
+    case TEACHER_AVERAGE_MARKS_SUCCESS:
       return { loading: false, averageMarks: action.payload }
-    case TEACHER_GET_AVERAGE_FAIL:
+    case TEACHER_AVERAGE_MARKS_FAIL:
       return { loading: false, error: action.payload }
-    case TEACHER_GET_AVERAGE_DELETE:
+    case TEACHER_AVERAGE_MARKS_DELETE:
       return { loading: false, averageMarks: {} }
     default:
       return state

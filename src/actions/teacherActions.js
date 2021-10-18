@@ -13,12 +13,12 @@ import {
   TEACHER_HOMEROOM_STUDENTS_SUCCESS,
   TEACHER_HOMEROOM_STUDENTS_FAIL,
   TEACHER_HOMEROOM_STUDENTS_DELETE,
-  TEACHER_HOMEROOM_GET_AVERAGE_REQUEST,
-  TEACHER_HOMEROOM_GET_AVERAGE_SUCCESS,
-  TEACHER_HOMEROOM_GET_AVERAGE_FAIL,
-  TEACHER_HOMEROOM_GET_TERM_MARKS_REQUEST,
-  TEACHER_HOMEROOM_GET_TERM_MARKS_SUCCESS,
-  TEACHER_HOMEROOM_GET_TERM_MARKS_FAIL,
+  TEACHER_HOMEROOM_AVERAGE_MARKS_REQUEST,
+  TEACHER_HOMEROOM_AVERAGE_MARKS_SUCCESS,
+  TEACHER_HOMEROOM_AVERAGE_MARKS_FAIL,
+  TEACHER_HOMEROOM_TERM_MARKS_REQUEST,
+  TEACHER_HOMEROOM_TERM_MARKS_SUCCESS,
+  TEACHER_HOMEROOM_TERM_MARKS_FAIL,
   TEACHER_HOMEROOM_ADD_TERM_MARK_REQUEST,
   TEACHER_HOMEROOM_ADD_TERM_MARK_SUCCESS,
   TEACHER_HOMEROOM_ADD_TERM_MARK_FAIL,
@@ -50,10 +50,10 @@ import {
   TEACHER_ADD_AVERAGE_SUCCESS,
   TEACHER_ADD_AVERAGE_FAIL,
   TEACHER_ADD_AVERAGE_DELETE,
-  TEACHER_GET_AVERAGE_REQUEST,
-  TEACHER_GET_AVERAGE_SUCCESS,
-  TEACHER_GET_AVERAGE_FAIL,
-  TEACHER_GET_AVERAGE_DELETE,
+  TEACHER_AVERAGE_MARKS_REQUEST,
+  TEACHER_AVERAGE_MARKS_SUCCESS,
+  TEACHER_AVERAGE_MARKS_FAIL,
+  TEACHER_AVERAGE_MARKS_DELETE,
 } from '../constants/teacherConstants'
 // import apiURL from '../apiURL'
 import axios from 'axios'
@@ -146,7 +146,7 @@ export const teacherLogout = () => async (dispatch) => {
   dispatch({ type: TEACHER_STUDENTS_DELETE })
 }
 
-export const getHomeroomStudentsList =
+export const getHomeroomStudents =
   () => async (dispatch, getState) => {
     try {
       dispatch({
@@ -184,7 +184,7 @@ export const getHomeroomAverageMarks =
   () => async (dispatch, getState) => {
     try {
       dispatch({
-        type: TEACHER_HOMEROOM_GET_AVERAGE_REQUEST,
+        type: TEACHER_HOMEROOM_AVERAGE_MARKS_REQUEST,
       })
 
       const config = {
@@ -230,12 +230,12 @@ export const getHomeroomAverageMarks =
       }
 
       dispatch({
-        type: TEACHER_HOMEROOM_GET_AVERAGE_SUCCESS,
+        type: TEACHER_HOMEROOM_AVERAGE_MARKS_SUCCESS,
         payload: averageMarks,
       })
     } catch (error) {
       dispatch({
-        type: TEACHER_HOMEROOM_GET_AVERAGE_FAIL,
+        type: TEACHER_HOMEROOM_AVERAGE_MARKS_FAIL,
         payload:
           error.response && error.response.data.message
             ? error.response.data.message
@@ -248,7 +248,7 @@ export const getHomeroomTermMarks =
   () => async (dispatch, getState) => {
     try {
       dispatch({
-        type: TEACHER_HOMEROOM_GET_TERM_MARKS_REQUEST,
+        type: TEACHER_HOMEROOM_TERM_MARKS_REQUEST,
       })
 
       const config = {
@@ -291,12 +291,12 @@ export const getHomeroomTermMarks =
       }
 
       dispatch({
-        type: TEACHER_HOMEROOM_GET_TERM_MARKS_SUCCESS,
+        type: TEACHER_HOMEROOM_TERM_MARKS_SUCCESS,
         payload: termMarks,
       })
     } catch (error) {
       dispatch({
-        type: TEACHER_HOMEROOM_GET_TERM_MARKS_FAIL,
+        type: TEACHER_HOMEROOM_TERM_MARKS_FAIL,
         payload:
           error.response && error.response.data.message
             ? error.response.data.message
@@ -686,7 +686,7 @@ export const getAverageMarks =
   (subjectID, students) => async (dispatch, getState) => {
     try {
       dispatch({
-        type: TEACHER_GET_AVERAGE_REQUEST,
+        type: TEACHER_AVERAGE_MARKS_REQUEST,
       })
 
       const config = {
@@ -717,12 +717,12 @@ export const getAverageMarks =
       console.log(averageMarks)
 
       dispatch({
-        type: TEACHER_GET_AVERAGE_SUCCESS,
+        type: TEACHER_AVERAGE_MARKS_SUCCESS,
         payload: averageMarks,
       })
     } catch (error) {
       dispatch({
-        type: TEACHER_GET_AVERAGE_FAIL,
+        type: TEACHER_AVERAGE_MARKS_FAIL,
         payload:
           error.response && error.response.data.message
             ? error.response.data.message
@@ -733,6 +733,6 @@ export const getAverageMarks =
 
 export const getAverageMarksDelete = () => async (dispatch) => {
   dispatch({
-    type: TEACHER_GET_AVERAGE_DELETE,
+    type: TEACHER_AVERAGE_MARKS_DELETE,
   })
 }

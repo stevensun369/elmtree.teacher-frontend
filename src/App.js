@@ -2,9 +2,6 @@ import React, { useEffect } from 'react'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 
-import WelcomeScreen from './screens/WelcomeScreen'
-
-// teacher
 import TeacherLoginScreen from './screens/TeacherLoginScreen'
 import TeacherHomeScreen from './screens/TeacherHomeScreen'
 import TeacherSubjectScreen from './screens/TeacherSubjectScreen'

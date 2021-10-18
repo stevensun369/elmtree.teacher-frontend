@@ -38,10 +38,10 @@ const TeacherSubjectScreen = ({ match, location, history }) => {
   var subjectStudentsList = studentsList[match.params.subjectID]
 
   // average marks
-  const teacherGetAverage = useSelector(
-    (state) => state.teacherGetAverage
+  const teacherAverageMarks = useSelector(
+    (state) => state.teacherAverageMarks
   )
-  const { averageMarks } = teacherGetAverage
+  const { averageMarks } = teacherAverageMarks
 
   var studentAverageMarks = sortAverageMarks(averageMarks)
 

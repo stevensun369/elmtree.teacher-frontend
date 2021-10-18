@@ -11,7 +11,7 @@ import HeaderBack from '../components/HeaderBack'
 import styles from '../css/TeacherAddMarkScreen.module.css'
 import {
   addHomeroomTermMark,
-  getHomeroomStudentsList,
+  getHomeroomStudents,
 } from '../actions/teacherActions'
 import NotAuthorized from '../components/NotAuthorized'
 import { sortStudentInfo } from '../utils/teacherSort'
@@ -64,7 +64,10 @@ const TeacherHomeroomAddTermMarkScreen = ({ history, match }) => {
 
   useEffect(() => {
     if (authorized) {
-      if (Object.entries(teacherHomeroomAddTermMark.termMark).length !== 0) {
+      if (
+        Object.entries(teacherHomeroomAddTermMark.termMark).length !==
+        0
+      ) {
         history.push(`/diriginte/${match.params.studentID}`)
       }
     }
@@ -78,7 +81,7 @@ const TeacherHomeroomAddTermMarkScreen = ({ history, match }) => {
 
   useEffect(() => {
     if (homeroomStudentsList.length === 0) {
-      dispatch(getHomeroomStudentsList())
+      dispatch(getHomeroomStudents())
     }
   }, [dispatch, homeroomStudentsList.length, authorized])
 
@@ -90,7 +93,8 @@ const TeacherHomeroomAddTermMarkScreen = ({ history, match }) => {
         <HeaderBack backTo={`/diriginte/${match.params.studentID}`}>
           {titleCondition && (
             <>
-              {studentInfo.lastName} {studentInfo.firstName} - Medie semestriala
+              {studentInfo.lastName} {studentInfo.firstName} - Medie
+              semestriala
             </>
           )}
         </HeaderBack>
@@ -120,10 +124,18 @@ const TeacherHomeroomAddTermMarkScreen = ({ history, match }) => {
                     setTerm(e.target.value)
                   }}
                 >
-                  <option className={styles.selectDateOption} value='1' key='1'>
+                  <option
+                    className={styles.selectDateOption}
+                    value='1'
+                    key='1'
+                  >
                     1
                   </option>
-                  <option className={styles.selectDateOption} value='2' key='2'>
+                  <option
+                    className={styles.selectDateOption}
+                    value='2'
+                    key='2'
+                  >
                     2
                   </option>
                 </select>

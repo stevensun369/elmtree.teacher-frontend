@@ -23,18 +23,6 @@
   float: right;
 }
 
-/* .fontMono {
-  font-family: 'Roboto Mono';
-
-  margin-right: 5px;
-}
-
-.fontSerif {
-  font-family: 'Roboto Mono';
-  letter-spacing: -1px;
-  font-weight: 600;
-} */
-
 .fontMono {
   font-family: sans-serif;
 }

@@ -12,12 +12,15 @@ import {
 import {
   addHomeroomTermMarkDelete,
   getHomeroomAverageMarks,
-  getHomeroomStudentsList,
+  getHomeroomStudents,
   getHomeroomTermMarks,
 } from '../actions/teacherActions'
 import { Link } from 'react-router-dom'
 import styles from '../css/TeacherHomeroomStudentScreen.module.css'
-import { sortAverageMarks, sortStudentInfo } from '../utils/teacherSort'
+import {
+  sortAverageMarks,
+  sortStudentInfo,
+} from '../utils/teacherSort'
 
 const TeacherHomeroomStudentScreen = ({ match, history }) => {
   const dispatch = useDispatch()
@@ -57,19 +60,19 @@ const TeacherHomeroomStudentScreen = ({ match, history }) => {
   }
 
   // average marks
-  const teacherHomeroomGetAverage = useSelector(
-    (state) => state.teacherHomeroomGetAverage
+  const teacherHomeroomAverageMarks = useSelector(
+    (state) => state.teacherHomeroomAverageMarks
   )
-  const { averageMarks } = teacherHomeroomGetAverage
+  const { averageMarks } = teacherHomeroomAverageMarks
 
   const studentAverageMarks = averageMarks[match.params.studentID]
   var subjectAverageMarks = sortAverageMarks(studentAverageMarks)
 
   // term marks
-  const teacherHomeroomGetTermMarks = useSelector(
-    (state) => state.teacherHomeroomGetTermMarks
+  const teacherHomeroomTermMarks = useSelector(
+    (state) => state.teacherHomeroomTermMarks
   )
-  const { termMarks } = teacherHomeroomGetTermMarks
+  const { termMarks } = teacherHomeroomTermMarks
 
   // the two term marks by term
   if (Object.keys(termMarks).length !== 0) {
@@ -77,13 +80,14 @@ const TeacherHomeroomStudentScreen = ({ match, history }) => {
     var termMarkTermTwo = termMarks[match.params.studentID][1]
   }
 
-  const titleCondition = homeroomStudentsList.length !== 0 && studentAuthorized
+  const titleCondition =
+    homeroomStudentsList.length !== 0 && studentAuthorized
 
   useEffect(() => {
     if (authorized) {
       dispatch(addHomeroomTermMarkDelete())
       if (homeroomStudentsList.length === 0) {
-        dispatch(getHomeroomStudentsList())
+        dispatch(getHomeroomStudents())
       }
 
       if (homeroomStudentsList.length !== 0) {
@@ -105,11 +109,15 @@ const TeacherHomeroomStudentScreen = ({ match, history }) => {
         </HeaderBack>
         <div className='header-margin-bottom'></div>
         <div className='main-container'>
-          <span className={styles.termMarksTitle}>Mediile Semestriale:</span>
+          <span className={styles.termMarksTitle}>
+            Mediile Semestriale:
+          </span>
           <div className={styles.termMarks}>
             <div className={styles.termMarksTermContainer}>
               <div className={styles.termMarksTerm}>
-                <div className={styles.termMarksTermSpan}>Sem. I:</div>
+                <div className={styles.termMarksTermSpan}>
+                  Sem. I:
+                </div>
                 <div className={styles.termMark}>
                   <span className={styles.termMarkSpan}>
                     {termMarkTermOne !== 0 && termMarkTermOne ? (
@@ -124,7 +132,9 @@ const TeacherHomeroomStudentScreen = ({ match, history }) => {
 
             <div className={styles.termMarksTermContainer}>
               <div className={styles.termMarksTerm}>
-                <div className={styles.termMarksTermSpan}>Sem. II:</div>
+                <div className={styles.termMarksTermSpan}>
+                  Sem. II:
+                </div>
                 <div className={styles.termMark}>
                   <span className={styles.termMarkSpan}>
                     {termMarkTermTwo !== 0 && termMarkTermTwo ? (
@@ -137,7 +147,9 @@ const TeacherHomeroomStudentScreen = ({ match, history }) => {
               </div>
             </div>
           </div>
-          <Link to={`/diriginte/${match.params.studentID}/0/semestru`}>
+          <Link
+            to={`/diriginte/${match.params.studentID}/0/semestru`}
+          >
             <div className={styles.toAddTermMark}>
               <span className={styles.toAddTermMarkSpan}>
                 Incheie media semestrială
@@ -153,8 +165,12 @@ const TeacherHomeroomStudentScreen = ({ match, history }) => {
                 <SubjectItem
                   key={item.subjectID}
                   linkTo={`/diriginte/${match.params.studentID}/${item.subjectID}`}
-                  averageMarkTermOne={subjectAverageMarks[item.subjectID][0]}
-                  averageMarkTermTwo={subjectAverageMarks[item.subjectID][1]}
+                  averageMarkTermOne={
+                    subjectAverageMarks[item.subjectID][0]
+                  }
+                  averageMarkTermTwo={
+                    subjectAverageMarks[item.subjectID][1]
+                  }
                 >{`${item.name}`}</SubjectItem>
               )}
             </div>

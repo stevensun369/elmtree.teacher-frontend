@@ -49,10 +49,10 @@ const TeacherSubjectStudentScreen = ({ match, history }) => {
   }
 
   // get average marks
-  const teacherGetAverage = useSelector(
-    (state) => state.teacherGetAverage
+  const teacherAverageMarks = useSelector(
+    (state) => state.teacherAverageMarks
   )
-  const { averageMarks } = teacherGetAverage
+  const { averageMarks } = teacherAverageMarks
 
   var studentAverageMarks = averageMarks[match.params.studentID]
 

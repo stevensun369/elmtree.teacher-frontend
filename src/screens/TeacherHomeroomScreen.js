@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import {
-  getHomeroomStudentsList,
+  getHomeroomStudents,
   getHomeroomTermMarks,
 } from '../actions/teacherActions'
 
@@ -34,15 +34,15 @@ const TeacherHomeroomScreen = ({ history }) => {
   var studentsLoaded
 
   // term marks
-  const teacherHomeroomGetTermMarks = useSelector(
-    (state) => state.teacherHomeroomGetTermMarks
+  const teacherHomeroomTermMarks = useSelector(
+    (state) => state.teacherHomeroomTermMarks
   )
-  const { termMarks } = teacherHomeroomGetTermMarks
+  const { termMarks } = teacherHomeroomTermMarks
 
   useEffect(() => {
     if (authorized) {
       if (homeroomStudentsList.length === 0) {
-        dispatch(getHomeroomStudentsList())
+        dispatch(getHomeroomStudents())
         studentsLoaded = true
       }
     }
