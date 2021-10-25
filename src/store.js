@@ -2,6 +2,7 @@ import { createStore, combineReducers, applyMiddleware } from 'redux'
 
 import thunk from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
+import { authURL } from './env'
 
 // reducers
 import {
@@ -103,8 +104,7 @@ window.onload = () => {
     console.log(requestData.userType)
 
     if (requestData.userType !== 'teacher' && requestData.userType) {
-      window.location.replace('https://google.com')
-      // alert('not teacher')
+      window.location.replace(authURL + '/#/redirect')
     }
 
     var teacherID = localStorage.getItem('userInfo')

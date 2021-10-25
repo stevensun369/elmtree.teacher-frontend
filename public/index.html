@@ -45,25 +45,6 @@
         navigator.serviceWorker.register('service-worker.js')
       }
     </script>
-    <!-- <script>
-      window.onload = () => {
-        var iframe = document.getElementsByTagName('iframe')[0]
-        var win
-        try {
-          win = iframe.contentWindow
-        } catch (e) {
-          win = iframe.contentWindow
-        }
-        win.postMessage('', '*')
-        let requestData
-        window.onmessage = (e) => {
-          requestData = e.data
-
-          localStorage.setItem('userType', requestData.userType)
-          localStorage.setItem('userInfo', requestData.userInfo)
-        }
-      }
-    </script> -->
     <iframe
       src="http://localhost:5000/#/auth"
       frameborder="0"

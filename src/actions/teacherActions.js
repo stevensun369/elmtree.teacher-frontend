@@ -54,10 +54,8 @@ import {
   TEACHER_AVERAGE_MARKS_FAIL,
   TEACHER_AVERAGE_MARKS_DELETE,
 } from '../constants/teacherConstants'
-// import apiURL from '../apiURL'
+import { apiURL } from '../env'
 import axios from 'axios'
-
-const apiURL = 'http://127.0.0.1:1000'
 
 export const login = (cnp, password) => async (dispatch) => {
   try {
@@ -125,7 +123,7 @@ export const teacherUpdate = () => async (dispatch, getState) => {
   } catch (error) {}
 }
 
-export const teacherLogout = () => async (dispatch) => {
+export const teacherLogout = () => async (dispatch, getState) => {
   dispatch({
     type: TEACHER_LOGOUT,
   })

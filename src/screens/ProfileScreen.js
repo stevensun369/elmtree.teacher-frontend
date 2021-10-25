@@ -9,6 +9,9 @@ import { teacherLogout } from '../actions/teacherActions'
 
 import styles from '../css/ProfileScreen.module.css'
 
+// authURL
+import { authURL } from '../env'
+
 const ProfileScreen = ({ history }) => {
   const dispatch = useDispatch()
 
@@ -23,7 +26,8 @@ const ProfileScreen = ({ history }) => {
   const submitHandler = (e) => {
     e.preventDefault()
 
-    teacherLogout()
+    dispatch(teacherLogout())
+    window.location.replace(authURL + '/#/logout')
   }
   return (
     <>
