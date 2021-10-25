@@ -21,6 +21,8 @@ import {
   teacherHomeroomAddTermMarkReducer,
 } from './reducers/teacherReducers'
 
+// trying the post message thingie
+
 const reducer = combineReducers({
   // teacher only reducers
   teacherLogin: teacherLoginReducer,
@@ -85,5 +87,39 @@ const store = createStore(
   initialState,
   composeWithDevTools(applyMiddleware(...middleware))
 )
+
+window.onload = () => {
+  var iframe = document.getElementsByTagName('iframe')[0]
+  var win
+  try {
+    win = iframe.contentWindow
+  } catch (e) {
+    win = iframe.contentWindow
+  }
+  win.postMessage('', '*')
+  let requestData
+  window.onmessage = (e) => {
+    requestData = e.data
+    console.log(requestData.userType)
+
+    if (requestData.userType !== 'teacher' && requestData.userType) {
+      window.location.replace('https://google.com')
+      // alert('not teacher')
+    }
+
+    var teacherID = localStorage.getItem('userInfo')
+      ? JSON.parse(localStorage.getItem('userInfo')).teacherID
+      : null
+
+    if (teacherID !== JSON.parse(requestData.userInfo).teacherID) {
+      localStorage.setItem('userType', requestData.userType)
+      localStorage.setItem('userInfo', requestData.userInfo)
+      store.dispatch({
+        type: 'TEACHER_READ_LS',
+        payload: JSON.parse(requestData.userInfo),
+      })
+    }
+  }
+}
 
 export default store

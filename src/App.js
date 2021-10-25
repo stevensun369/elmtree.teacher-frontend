@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 
-import TeacherLoginScreen from './screens/TeacherLoginScreen'
+import TeacherIndex from './screens/TeacherIndex'
 import TeacherHomeScreen from './screens/TeacherHomeScreen'
 import TeacherSubjectScreen from './screens/TeacherSubjectScreen'
 import TeacherSubjectStudentScreen from './screens/TeacherSubjectStudentScreen'
@@ -40,11 +40,7 @@ function App() {
   return (
     <Router>
       {/* teacher */}
-      <Route
-        path='/conectare/profesor'
-        component={TeacherLoginScreen}
-        exact
-      />
+      <Route path='/' component={TeacherIndex} exact />
       <Route path='/profesor' component={TeacherHomeScreen} exact />
       <Route
         path='/profesor/:subjectID'

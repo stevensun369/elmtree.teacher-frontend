@@ -2,8 +2,7 @@ import {
   TEACHER_LOGIN_REQUEST,
   TEACHER_LOGIN_SUCCESS,
   TEACHER_LOGIN_FAIL,
-  TEACHER_UPDATE_HOMEROOM_GRADE,
-  TEACHER_UPDATE_SUBJECT_LIST,
+  TEACHER_UPDATE,
   TEACHER_LOGOUT,
   TEACHER_STUDENTS_REQUEST,
   TEACHER_STUDENTS_SUCCESS,
@@ -107,28 +106,20 @@ export const teacherUpdate = () => async (dispatch, getState) => {
 
     var ls = JSON.parse(localStorage.getItem('userInfo'))
 
-    const homeroomGrade = await axios.get(
-      `${apiURL}/api/teacher/homeroom/info`,
-      config
-    )
-
-    const subjectList = await axios.get(
-      `${apiURL}/api/teacher/subjects`,
+    // new way
+    const update = await axios.get(
+      `${apiURL}/api/teacher/update`,
       config
     )
 
     dispatch({
-      type: TEACHER_UPDATE_HOMEROOM_GRADE,
-      payload: homeroomGrade.data,
+      type: TEACHER_UPDATE,
+      payload: update.data,
     })
-    ls.homeroomGrade = homeroomGrade.data
 
-    dispatch({
-      type: TEACHER_UPDATE_SUBJECT_LIST,
-      payload: subjectList.data,
-    })
-    ls.subjectList = subjectList.data.subjectList
-    ls.token = subjectList.data.token
+    ls.homeroomGrade = update.data.homeroomGrade
+    ls.subjectList = update.data.subjectList
+    ls.token = update.data.token
 
     localStorage.setItem('userInfo', JSON.stringify(ls))
   } catch (error) {}

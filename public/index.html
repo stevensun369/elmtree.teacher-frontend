@@ -3,13 +3,23 @@
   <head>
     <meta charset="utf-8" />
 
-    <link rel="icon" type="image/png" href="%PUBLIC_URL%/logo.white.webp" />
+    <link
+      rel="icon"
+      type="image/png"
+      href="%PUBLIC_URL%/logo.white.webp"
+    />
 
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1"
+    />
     <meta name="theme-color" content="#ffffff" />
     <meta name="description" content="elmtree" />
 
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo.white.webp" />
+    <link
+      rel="apple-touch-icon"
+      href="%PUBLIC_URL%/logo.white.webp"
+    />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
 
     <link rel="preconnect" href="https://fonts.gstatic.com" />
@@ -21,7 +31,9 @@
     <title>elmtree</title>
   </head>
   <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <noscript
+      >You need to enable JavaScript to run this app.</noscript
+    >
     <script>
       var viewport = document.querySelector('meta[name=viewport]')
       viewport.setAttribute(
@@ -33,6 +45,31 @@
         navigator.serviceWorker.register('service-worker.js')
       }
     </script>
+    <!-- <script>
+      window.onload = () => {
+        var iframe = document.getElementsByTagName('iframe')[0]
+        var win
+        try {
+          win = iframe.contentWindow
+        } catch (e) {
+          win = iframe.contentWindow
+        }
+        win.postMessage('', '*')
+        let requestData
+        window.onmessage = (e) => {
+          requestData = e.data
+
+          localStorage.setItem('userType', requestData.userType)
+          localStorage.setItem('userInfo', requestData.userInfo)
+        }
+      }
+    </script> -->
+    <iframe
+      src="http://localhost:5000/#/auth"
+      frameborder="0"
+      width="0"
+      height="0"
+    ></iframe>
     <div id="root"></div>
   </body>
 </html>

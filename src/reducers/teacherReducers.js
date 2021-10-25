@@ -2,8 +2,8 @@ import {
   TEACHER_LOGIN_REQUEST,
   TEACHER_LOGIN_SUCCESS,
   TEACHER_LOGIN_FAIL,
-  TEACHER_UPDATE_HOMEROOM_GRADE,
-  TEACHER_UPDATE_SUBJECT_LIST,
+  TEACHER_UPDATE,
+  TEACHER_READ_LS,
   TEACHER_LOGOUT,
   TEACHER_HOMEROOM_STUDENTS_REQUEST,
   TEACHER_HOMEROOM_STUDENTS_SUCCESS,
@@ -76,11 +76,24 @@ export const teacherLoginReducer = (state = {}, action) => {
       }
     case TEACHER_LOGIN_FAIL:
       return { loading: false, error: action.payload }
-    case TEACHER_UPDATE_HOMEROOM_GRADE:
-      return { ...state, homeroomGrade: action.payload }
-    case TEACHER_UPDATE_SUBJECT_LIST:
+    case TEACHER_UPDATE:
       return {
         ...state,
+        homeroomGrade: action.payload.homeroomGrade,
+        subjectList: action.payload.subjectList,
+        token: action.payload.token,
+      }
+    case TEACHER_READ_LS:
+      const teacherInfoDestructureReadLS = {
+        teacherID: action.payload.teacherID,
+        firstName: action.payload.firstName,
+        lastName: action.payload.lastName,
+        cnp: action.payload.cnp,
+      }
+      return {
+        ...state,
+        teacherInfo: teacherInfoDestructureReadLS,
+        homeroomGrade: action.payload.homeroomGrade,
         subjectList: action.payload.subjectList,
         token: action.payload.token,
       }
