@@ -46,13 +46,10 @@ const TeacherHomeroomMotivateTruancy = ({ match, history }) => {
     match.params.subjectID
   )
 
-  // subject authorized
-  for (var subject in homeroomStudentSubjectsList) {
-    var subjectAuthorized = protectHomeroomSubjectID(
-      match.params.subjectID,
-      homeroomStudentSubjectsList
-    )
-  }
+  var subjectAuthorized = protectHomeroomSubjectID(
+    match.params.subjectID,
+    homeroomStudentSubjectsList
+  )
 
   // homeroom students
   const teacherHomeroomStudents = useSelector(
@@ -109,12 +106,6 @@ const TeacherHomeroomMotivateTruancy = ({ match, history }) => {
 
   useEffect(() => {
     if (authorized) {
-      // if (Object.keys(teacherMotivateTruancy.motivateTruancy).length !== 0) {
-      //   history.push(
-      //     `/diriginte/${match.params.studentID}/${match.params.subjectID}`
-      //   )
-      // }
-
       if (homeroomStudentSubjectsList.length === 0) {
         dispatch(
           getHomeroomStudentSubjectsList(match.params.studentID)
@@ -141,7 +132,15 @@ const TeacherHomeroomMotivateTruancy = ({ match, history }) => {
     match.params.truancyID,
     history,
     authorized,
+
+    homeroomStudentSubjectsList.length,
+    homeroomStudentsList.length,
+    subjectStudentTruancysList.length,
   ])
+
+  let teacherMotivateTruancyLength = Object.keys(
+    teacherMotivateTruancy.motivateTruancy
+  ).length
 
   useEffect(() => {
     if (
@@ -151,7 +150,13 @@ const TeacherHomeroomMotivateTruancy = ({ match, history }) => {
         `/diriginte/${match.params.studentID}/${match.params.subjectID}`
       )
     }
-  }, [Object.keys(teacherMotivateTruancy.motivateTruancy).length])
+  }, [
+    teacherMotivateTruancyLength,
+    history,
+    match.params.studentID,
+    match.params.subjectID,
+    teacherMotivateTruancy.motivateTruancy,
+  ])
 
   if (authorized && studentAuthorized && subjectAuthorized) {
     return (

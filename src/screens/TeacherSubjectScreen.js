@@ -52,11 +52,7 @@ const TeacherSubjectScreen = ({ match, location, history }) => {
   )
 
   useEffect(() => {
-    if (
-      authorized &&
-      Object.keys(studentsList).length !== 0 &&
-      Object.keys(averageMarks).length === 0
-    ) {
+    if (authorized) {
       dispatch(deleteMarksAndTruancys())
       dispatch(
         getAverageMarks(match.params.subjectID, subjectStudentsList)
@@ -67,6 +63,8 @@ const TeacherSubjectScreen = ({ match, location, history }) => {
     authorized,
     match.params.subjectID,
     subjectStudentsList,
+    // Object.keys(studentsList).length,
+    // Object.keys(averageMarks).length,
   ])
 
   if (authorized) {

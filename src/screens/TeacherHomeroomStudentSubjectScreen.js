@@ -87,13 +87,10 @@ const TeacherHomeroomStudentSubjectScreen = ({ match, history }) => {
     match.params.subjectID
   )
 
-  // subject authorized
-  for (var subject in homeroomStudentSubjectsList) {
-    var subjectAuthorized = protectHomeroomSubjectID(
-      match.params.subjectID,
-      homeroomStudentSubjectsList
-    )
-  }
+  var subjectAuthorized = protectHomeroomSubjectID(
+    match.params.subjectID,
+    homeroomStudentSubjectsList
+  )
 
   // average marks
   const teacherHomeroomAverageMarks = useSelector(
@@ -101,7 +98,6 @@ const TeacherHomeroomStudentSubjectScreen = ({ match, history }) => {
   )
   const { averageMarks } = teacherHomeroomAverageMarks
 
-  var studentAverageMarks = averageMarks[match.params.studentID]
   var subjectAverageMarks = {}
 
   if (Object.keys(averageMarks).length !== 0) {
@@ -163,6 +159,7 @@ const TeacherHomeroomStudentSubjectScreen = ({ match, history }) => {
     dispatch,
     match.params.subjectID,
     match.params.studentID,
+    averageMarks,
     authorized,
   ])
 
@@ -177,7 +174,12 @@ const TeacherHomeroomStudentSubjectScreen = ({ match, history }) => {
     ) {
       dispatch(getHomeroomAverageMarks())
     }
-  }, [dispatch, homeroomStudentsList.length, authorized])
+  }, [
+    dispatch,
+    homeroomStudentsList.length,
+    authorized,
+    averageMarks,
+  ])
 
   if (authorized && studentAuthorized && subjectAuthorized) {
     return (

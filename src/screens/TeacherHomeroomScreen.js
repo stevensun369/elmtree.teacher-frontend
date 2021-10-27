@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   getHomeroomStudents,
@@ -31,7 +31,7 @@ const TeacherHomeroomScreen = ({ history }) => {
   const { loading, error, homeroomStudentsList } =
     teacherHomeroomStudents
 
-  var studentsLoaded
+  let studentsLoaded = useRef('')
 
   // term marks
   const teacherHomeroomTermMarks = useSelector(
@@ -43,10 +43,10 @@ const TeacherHomeroomScreen = ({ history }) => {
     if (authorized) {
       if (homeroomStudentsList.length === 0) {
         dispatch(getHomeroomStudents())
-        studentsLoaded = true
+        studentsLoaded.current = true
       }
     }
-  }, [dispatch, authorized])
+  }, [dispatch, authorized, homeroomStudentsList.length])
 
   useEffect(() => {
     if (authorized) {
@@ -54,7 +54,7 @@ const TeacherHomeroomScreen = ({ history }) => {
         dispatch(getHomeroomTermMarks())
       }
     }
-  }, [dispatch, studentsLoaded])
+  }, [dispatch, studentsLoaded, authorized])
 
   if (authorized) {
     return (
