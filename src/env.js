@@ -1,6 +1,6 @@
 let apiURL
 let authURL
-let env = 'dev'
+let env = 'prod'
 
 if (env === 'dev') {
   apiURL = 'http://localhost:1000'
