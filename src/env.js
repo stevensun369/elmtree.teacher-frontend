@@ -6,8 +6,8 @@ if (env === 'dev') {
   apiURL = 'http://localhost:1000'
   authURL = 'http://localhost:5000'
 } else if (env === 'prod') {
-  apiURL = 'http://api.elmtree.io'
-  authURL = 'http://auth.elmtree.io'
+  apiURL = 'https://elmtreeapi.xyz'
+  authURL = 'http://elmtree-auth-frontend.vercel.app'
 }
 
 export { apiURL, authURL, env }
