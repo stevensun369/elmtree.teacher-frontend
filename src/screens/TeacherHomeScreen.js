@@ -19,14 +19,6 @@ const TeacherHomeScreen = ({ history }) => {
   const { teacherInfo, homeroomGrade, subjectList } = teacherLogin
   const homeroom = protectHomeroom(homeroomGrade)
 
-  // // if user is not logged in
-  // if (!teacherLogin.teacherInfo) {
-  //   window.history.replace('https://google.com')
-  // }
-
-  // this averageMarksDelete makes sense,
-  // because when we make request to retrieve averageMarks,
-  // we only get averageMarks for the subject chosen
   useEffect(() => {
     dispatch(getAverageMarksDelete())
   }, [dispatch])
