@@ -1,14 +1,12 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Form } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
-import {
-  addAverage,
-  getFinalMarks,
-  getSubjectStudentMarksList,
-} from '../actions/teacherActions'
+import { addFinalMark } from '../actions/teacherActions'
 import HeaderBack from '../components/HeaderBack'
-import styles from '../css/TeacherMotivateTruancyScreen.module.css'
+import styles from '../css/TeacherAddMarkScreen.module.css'
 import Loader from '../components/Loader'
+import Message from '../components/Message'
+
 import {
   protectTeacher,
   protectTeacherStudentID,
@@ -17,13 +15,14 @@ import NotAuthorized from '../components/NotAuthorized'
 import {
   sortStudentInfo,
   sortSubjectInfo,
-  calculateAverageMark,
 } from '../utils/teacherSort'
 
-const TeacherAddAverageMarkScreen = ({ match, history }) => {
+const TeacherAddFinalMarkScreen = ({ match, history }) => {
   const dispatch = useDispatch()
 
+  // authorization
   const teacherLogin = useSelector((state) => state.teacherLogin)
+
   if (!teacherLogin.teacherInfo) {
     history.push('/')
   } else {
@@ -33,9 +32,7 @@ const TeacherAddAverageMarkScreen = ({ match, history }) => {
     )
   }
 
-  const { finalMarks } = useSelector(
-    (state) => state.teacherFinalMarks
-  )
+  const [value, setValue] = useState('1')
 
   // subject Info
   var subjectInfo = sortSubjectInfo(
@@ -43,20 +40,23 @@ const TeacherAddAverageMarkScreen = ({ match, history }) => {
     match.params.subjectID
   )
 
-  // student
+  // students
   const teacherStudents = useSelector(
     (state) => state.teacherStudents
   )
   const { studentsList } = teacherStudents
 
+  // subject students list
   var subjectStudentsList = studentsList[match.params.subjectID]
 
+  // subject student info
   var subjectStudentInfo = sortStudentInfo(
     studentsList,
     subjectStudentsList,
     match.params.studentID
   )
 
+  // student authorized
   if (studentsList.length !== 0) {
     var studentAuthorized = protectTeacherStudentID(
       match.params.studentID,
@@ -64,34 +64,21 @@ const TeacherAddAverageMarkScreen = ({ match, history }) => {
     )
   }
 
-  // add average
-  const teacherAddAverage = useSelector(
-    (state) => state.teacherAddAverage
-  )
-  const { average } = teacherAddAverage
-
-  // marks
-  const teacherSubjectStudentMarks = useSelector(
-    (state) => state.teacherSubjectStudentMarks
-  )
-  const { subjectStudentMarksList } = teacherSubjectStudentMarks
-
-  // averageMarkValue
-  const averageMarkValue = calculateAverageMark(
-    subjectStudentMarksList,
-    Number(match.params.term),
-    finalMarks[Number(match.params.term)]
-  )
-
   // condition
   const titleCondition =
     studentsList.length !== 0 && studentAuthorized
+
+  // mark info
+  const teacherAddFinalMark = useSelector(
+    (state) => state.teacherAddFinalMark
+  )
 
   const submitHandler = (e) => {
     e.preventDefault()
 
     dispatch(
-      addAverage(
+      addFinalMark(
+        value,
         match.params.subjectID,
         match.params.studentID,
         match.params.term
@@ -101,7 +88,7 @@ const TeacherAddAverageMarkScreen = ({ match, history }) => {
 
   useEffect(() => {
     if (authorized) {
-      if (average.averageMarkID) {
+      if (teacherAddFinalMark.flag) {
         history.push(
           `/profesor/${match.params.subjectID}/${match.params.studentID}`
         )
@@ -111,30 +98,10 @@ const TeacherAddAverageMarkScreen = ({ match, history }) => {
     dispatch,
     match.params.subjectID,
     match.params.studentID,
-    average.averageMarkID,
+    teacherAddFinalMark.flag,
     authorized,
     history,
   ])
-
-  useEffect(() => {
-    if (authorized) {
-      dispatch(
-        getSubjectStudentMarksList(
-          match.params.subjectID,
-          match.params.studentID
-        )
-      )
-      dispatch(
-        getFinalMarks(match.params.subjectID, match.params.studentID)
-      )
-    }
-  }, [
-    dispatch,
-    match.params.subjectID,
-    match.params.studentID,
-    authorized,
-  ])
-
   if (authorized && studentAuthorized) {
     return (
       <>
@@ -152,34 +119,52 @@ const TeacherAddAverageMarkScreen = ({ match, history }) => {
         </HeaderBack>
         <div className='header-margin-bottom'></div>
         <div className='main-container'>
-          {finalMarks[match.params.term] ? (
-            <>
-              <div className={styles.title}>
-                <span>
-                  Incheie media {averageMarkValue} pe semestrul{' '}
-                  {match.params.term}
-                </span>
-              </div>
-              {finalMarks[match.params.term] && (
-                <>
-                  {teacherAddAverage.loading ? (
-                    <Loader />
-                  ) : (
-                    <div className={styles.mainCard}>
-                      <Form onSubmit={submitHandler}>
-                        <input
-                          className={styles.submitButton}
-                          type='submit'
-                          value={`Incheie media ${averageMarkValue}`}
-                        />
-                      </Form>
-                    </div>
-                  )}
-                </>
-              )}
-            </>
+          <div className={styles.title}>
+            <span>Adaugă o nota de teză</span>
+          </div>
+
+          {teacherAddFinalMark.loading ? (
+            <Loader />
           ) : (
-            <></>
+            <div className={styles.mainCard}>
+              <Form onSubmit={submitHandler}>
+                {teacherAddFinalMark.error && (
+                  <Message variant='danger'>
+                    {teacherAddFinalMark.error}
+                  </Message>
+                )}
+                <input
+                  type='number'
+                  className={styles.inputValue}
+                  name='value'
+                  placeholder='Valoarea notei'
+                  value={value}
+                  onChange={(e) => {
+                    setValue(e.target.value)
+                  }}
+                />
+                {value !== '' && value < 1 && (
+                  <Message variant='danger'>
+                    Valoarea notei este prea mica
+                  </Message>
+                )}
+                {value > 10 && (
+                  <Message variant='danger'>
+                    Valoarea notei este prea mare
+                  </Message>
+                )}
+                <input
+                  className={styles.submitButton}
+                  type='submit'
+                  value='Adaugă nota de teză'
+                  disabled={
+                    Number(value) > 10 ||
+                    Number(value) < 1 ||
+                    value === ''
+                  }
+                />
+              </Form>
+            </div>
           )}
         </div>
       </>
@@ -189,4 +174,4 @@ const TeacherAddAverageMarkScreen = ({ match, history }) => {
   }
 }
 
-export default TeacherAddAverageMarkScreen
+export default TeacherAddFinalMarkScreen

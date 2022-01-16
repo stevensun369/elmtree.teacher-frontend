@@ -18,11 +18,13 @@ export const sortAverageMarks = (averageMarks) => {
 
     for (var subjectAverageMark in averageMarks[item]) {
       if (averageMarks[item][subjectAverageMark].term === 1) {
-        itemAverageMarks[item][0] = averageMarks[item][subjectAverageMark].value
+        itemAverageMarks[item][0] =
+          averageMarks[item][subjectAverageMark].value
       }
 
       if (averageMarks[item][subjectAverageMark].term === 2) {
-        itemAverageMarks[item][1] = averageMarks[item][subjectAverageMark].value
+        itemAverageMarks[item][1] =
+          averageMarks[item][subjectAverageMark].value
       }
     }
   }
@@ -91,21 +93,45 @@ export const sortAverageMarksByTerm = (averageMarksList) => {
   return { averageMarkTermOne, averageMarkTermTwo }
 }
 
-export const sortTermMarkValues = (marksList, term) => {
-  var termMarkValues = []
-  for (var mark in marksList) {
-    if (marksList[mark].term === term) {
-      termMarkValues.push(marksList[mark].value)
+export const calculateAverageMark = (marks, term, finalMark) => {
+  if (finalMark) {
+    let markValuesCounter = 0.0
+    let marksCounter = 0.0
+
+    for (let markIndex in marks) {
+      let mark = marks[markIndex]
+      if (mark.term === term) {
+        markValuesCounter += mark.value
+        marksCounter += 1
+      }
     }
+
+    let marksValue = markValuesCounter / marksCounter
+    let marksValueFormat = Math.floor(marksValue * 100) / 100
+
+    let value = Math.round(
+      (marksValueFormat * 3 + finalMark.value) / 4
+    )
+
+    return value
+  } else {
+    let markValuesCounter = 0.0
+    let marksCounter = 0.0
+
+    for (let markIndex in marks) {
+      let mark = marks[markIndex]
+
+      if (mark.term === term) {
+        markValuesCounter += mark.value
+        marksCounter += 1
+      }
+    }
+
+    let marksValue = markValuesCounter / marksCounter
+    let value = Math.round(marksValue)
+
+    return value
   }
-
-  const averageMarkValue = Math.round(
-    termMarkValues.reduce((total, num) => {
-      return total + num
-    }, 0) / termMarkValues.length
-  )
-
-  return { termMarkValues, averageMarkValue }
 }
 
 export const sortTruancyInfo = (truancysList, truancyID) => {

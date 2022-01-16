@@ -8,6 +8,8 @@ import {
   motivateTruancyDelete,
   addAverageDelete,
   getAverageMarks,
+  getFinalMarks,
+  addFinalMarkDelete,
 } from '../actions/teacherActions'
 import HeaderBack from '../components/HeaderBack'
 import { Link } from 'react-router-dom'
@@ -23,6 +25,7 @@ import Mark from '../components/Mark'
 import TruancyModifiable from '../components/TruancyModifiable'
 import MarksTitle from '../components/MarksTitle'
 import TruancysTitle from '../components/TruancysTitle'
+import FinalMark from '../components/FinalMark'
 
 import styles from '../css/TeacherSubjectStudentScreen.module.css'
 import {
@@ -54,7 +57,7 @@ const TeacherSubjectStudentScreen = ({ match, history }) => {
   )
   const { averageMarks } = teacherAverageMarks
 
-  var studentAverageMarks = averageMarks[match.params.studentID]
+  const studentAverageMarks = averageMarks[match.params.studentID]
 
   // teacher subject student marks
   const teacherSubjectStudentMarks = useSelector(
@@ -74,16 +77,22 @@ const TeacherSubjectStudentScreen = ({ match, history }) => {
     match.params.subjectID
   )
 
+  // finalmarks
+  const teacherFinalMarks = useSelector(
+    (state) => state.teacherFinalMarks
+  )
+  const { finalMarks } = teacherFinalMarks
+
   // new student Info
   const teacherStudents = useSelector(
     (state) => state.teacherStudents
   )
   const { studentsList } = teacherStudents
 
-  var subjectStudentsList = studentsList[match.params.subjectID]
+  const subjectStudentsList = studentsList[match.params.subjectID]
 
   // subjectStudentInfo
-  var subjectStudentInfo = sortStudentInfo(
+  const subjectStudentInfo = sortStudentInfo(
     studentsList,
     subjectStudentsList,
     match.params.studentID
@@ -149,6 +158,7 @@ const TeacherSubjectStudentScreen = ({ match, history }) => {
       dispatch(addTruancyDelete())
       dispatch(motivateTruancyDelete())
       dispatch(addAverageDelete())
+      dispatch(addFinalMarkDelete())
 
       dispatch(
         getSubjectStudentMarksList(
@@ -162,6 +172,9 @@ const TeacherSubjectStudentScreen = ({ match, history }) => {
           match.params.subjectID,
           match.params.studentID
         )
+      )
+      dispatch(
+        getFinalMarks(match.params.subjectID, match.params.studentID)
       )
     }
   }, [
@@ -237,6 +250,15 @@ const TeacherSubjectStudentScreen = ({ match, history }) => {
                         {item.value}
                       </Mark>
                     ))}
+
+                    {finalMarks[1] && (
+                      <FinalMark
+                        subjectID={match.params.subjectID}
+                        studentID={match.params.studentID}
+                        term='1'
+                        finalMarks={finalMarks}
+                      />
+                    )}
                   </>
                 ) : (
                   <span className={styles.notExist}>
@@ -295,6 +317,15 @@ const TeacherSubjectStudentScreen = ({ match, history }) => {
                         {item.value}
                       </Mark>
                     ))}
+
+                    {finalMarks[2] && (
+                      <FinalMark
+                        subjectID={match.params.subjectID}
+                        studentID={match.params.studentID}
+                        term='2'
+                        finalMarks={finalMarks}
+                      />
+                    )}
                   </>
                 ) : (
                   <span className={styles.notExist}>

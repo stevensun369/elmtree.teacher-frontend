@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import TeacherIndex from './screens/TeacherIndex'
 import TeacherHomeScreen from './screens/TeacherHomeScreen'
+import TimetableScreen from './screens/TimetableScreen'
 import TeacherSubjectScreen from './screens/TeacherSubjectScreen'
 import TeacherSubjectStudentScreen from './screens/TeacherSubjectStudentScreen'
 import TeacherHomeroomScreen from './screens/TeacherHomeroomScreen'
@@ -24,6 +25,7 @@ import {
   teacherUpdate,
   getStudentsList,
 } from './actions/teacherActions'
+import TeacherAddFinalMarkScreen from './screens/TeacherAddFinalMarkScreen'
 
 function App() {
   const dispatch = useDispatch()
@@ -41,6 +43,8 @@ function App() {
     <Router>
       {/* teacher */}
       <Route path='/' component={TeacherIndex} exact />
+      <Route path='/orar' component={TimetableScreen} exact />
+
       <Route path='/profesor' component={TeacherHomeScreen} exact />
       <Route
         path='/profesor/:subjectID'
@@ -71,6 +75,11 @@ function App() {
       <Route
         path='/profesor/:subjectID/:studentID/medie/:term'
         component={TeacherAddAverageMarkScreen}
+        exact
+      />
+      <Route
+        path='/profesor/:subjectID/:studentID/teza/:term'
+        component={TeacherAddFinalMarkScreen}
         exact
       />
 

@@ -49,10 +49,23 @@ import {
   TEACHER_ADD_AVERAGE_SUCCESS,
   TEACHER_ADD_AVERAGE_FAIL,
   TEACHER_ADD_AVERAGE_DELETE,
+  TEACHER_ADD_FINAL_MARK_REQUEST,
+  TEACHER_ADD_FINAL_MARK_SUCCESS,
+  TEACHER_ADD_FINAL_MARK_FAIL,
+  TEACHER_ADD_FINAL_MARK_DELETE,
+  TEACHER_FINAL_MARKS_REQUEST,
+  TEACHER_FINAL_MARKS_SUCCESS,
+  TEACHER_FINAL_MARKS_FAIL,
   TEACHER_AVERAGE_MARKS_REQUEST,
   TEACHER_AVERAGE_MARKS_SUCCESS,
   TEACHER_AVERAGE_MARKS_FAIL,
   TEACHER_AVERAGE_MARKS_DELETE,
+  TEACHER_TIMETABLE_REQUEST,
+  TEACHER_TIMETABLE_SUCCESS,
+  TEACHER_TIMETABLE_FAIL,
+  TEACHER_SCHOOL_REQUEST,
+  TEACHER_SCHOOL_SUCCESS,
+  TEACHER_SCHOOL_FAIL,
 } from '../constants/teacherConstants'
 import { apiURL } from '../env'
 import axios from 'axios'
@@ -723,5 +736,178 @@ export const getAverageMarks =
 export const getAverageMarksDelete = () => async (dispatch) => {
   dispatch({
     type: TEACHER_AVERAGE_MARKS_DELETE,
+  })
+}
+
+export const getTimetable = () => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: TEACHER_TIMETABLE_REQUEST,
+    })
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${getState().teacherLogin.token}`,
+      },
+    }
+
+    const { data } = await axios.get(
+      `${apiURL}/api/teacher/timetable`,
+      config
+    )
+
+    var days = [1, 2, 3, 4, 5]
+    // var intervals = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
+    var periods = {}
+
+    for (var dayKey in days) {
+      var day = days[dayKey]
+      periods[day] = {}
+    }
+
+    for (var key in data) {
+      var period = data[key]
+      periods[period.day][period.interval] = period
+    }
+
+    dispatch({
+      type: TEACHER_TIMETABLE_SUCCESS,
+      payload: periods,
+    })
+  } catch (error) {
+    dispatch({
+      type: TEACHER_TIMETABLE_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    })
+  }
+}
+
+export const getSchool = () => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: TEACHER_SCHOOL_REQUEST,
+    })
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${getState().teacherLogin.token}`,
+      },
+    }
+
+    const { data } = await axios.get(
+      `${apiURL}/api/teacher/school`,
+      config
+    )
+
+    dispatch({
+      type: TEACHER_SCHOOL_SUCCESS,
+      payload: data,
+    })
+  } catch (error) {
+    dispatch({
+      type: TEACHER_SCHOOL_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    })
+  }
+}
+
+export const getFinalMarks =
+  (subjectID, studentID) => async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: TEACHER_FINAL_MARKS_REQUEST,
+      })
+
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${getState().teacherLogin.token}`,
+        },
+      }
+
+      const { data } = await axios.get(
+        `${apiURL}/api/teacher/final/${subjectID}/${studentID}`,
+        config
+      )
+
+      let finalMarkTermOne = {}
+      let finalMarkTermTwo = {}
+
+      for (let finalMark in data) {
+        if (data[finalMark].term === 1) {
+          finalMarkTermOne = data[finalMark]
+        }
+        if (data[finalMark].term === 2) {
+          finalMarkTermTwo = data[finalMark]
+        }
+      }
+
+      let finalMarks = {
+        1: finalMarkTermOne,
+        2: finalMarkTermTwo,
+      }
+
+      dispatch({
+        type: TEACHER_FINAL_MARKS_SUCCESS,
+        payload: finalMarks,
+      })
+    } catch (error) {
+      dispatch({
+        type: TEACHER_FINAL_MARKS_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      })
+    }
+  }
+
+export const addFinalMark =
+  (value, subjectID, studentID, term) =>
+  async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: TEACHER_ADD_FINAL_MARK_REQUEST,
+      })
+
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${getState().teacherLogin.token}`,
+        },
+      }
+
+      const { data } = await axios.post(
+        `${apiURL}/api/teacher/final`,
+        { value, subjectID, studentID, term },
+        config
+      )
+
+      dispatch({
+        type: TEACHER_ADD_FINAL_MARK_SUCCESS,
+        payload: data,
+      })
+    } catch (error) {
+      dispatch({
+        type: TEACHER_ADD_FINAL_MARK_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      })
+    }
+  }
+
+export const addFinalMarkDelete = () => async (dispatch) => {
+  dispatch({
+    type: TEACHER_ADD_FINAL_MARK_DELETE,
   })
 }

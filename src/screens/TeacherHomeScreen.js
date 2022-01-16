@@ -32,18 +32,32 @@ const TeacherHomeScreen = ({ history }) => {
           <div className='main-container'>
             {teacherInfo.teacherID && (
               <>
-                {homeroom && (
+                {homeroom ? (
                   <>
-                    <Link to='/diriginte'>
-                      <div className={styles.toHomeroom}>
-                        <span>
-                          &gt;&gt; către pagina de dirigenție
-                        </span>
-                      </div>
-                    </Link>
-                    <div style={{ marginTop: '2vh' }}></div>
+                    <div className={styles.topLinks}>
+                      <Link to='/diriginte'>
+                        <div className={styles.topLink}>
+                          <span>{'>> '}catre dirigentie</span>
+                        </div>
+                      </Link>
+                      <Link to='/orar'>
+                        <div
+                          className={styles.topLink}
+                          style={{ float: 'right' }}
+                        >
+                          <span>{'>> '}catre orar</span>
+                        </div>
+                      </Link>
+                    </div>
                   </>
+                ) : (
+                  <Link to='/orar'>
+                    <div className={styles.topLinkFull}>
+                      <span>{'>> '}catre orar</span>
+                    </div>
+                  </Link>
                 )}
+                <div style={{ marginTop: '2vh' }}></div>
                 {loading ? (
                   <Loader />
                 ) : (

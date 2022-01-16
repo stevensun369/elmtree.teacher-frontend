@@ -50,10 +50,23 @@ import {
   TEACHER_ADD_AVERAGE_SUCCESS,
   TEACHER_ADD_AVERAGE_FAIL,
   TEACHER_ADD_AVERAGE_DELETE,
+  TEACHER_ADD_FINAL_MARK_REQUEST,
+  TEACHER_ADD_FINAL_MARK_SUCCESS,
+  TEACHER_ADD_FINAL_MARK_FAIL,
+  TEACHER_ADD_FINAL_MARK_DELETE,
+  TEACHER_FINAL_MARKS_REQUEST,
+  TEACHER_FINAL_MARKS_SUCCESS,
+  TEACHER_FINAL_MARKS_FAIL,
   TEACHER_AVERAGE_MARKS_REQUEST,
   TEACHER_AVERAGE_MARKS_SUCCESS,
   TEACHER_AVERAGE_MARKS_FAIL,
   TEACHER_AVERAGE_MARKS_DELETE,
+  TEACHER_TIMETABLE_REQUEST,
+  TEACHER_TIMETABLE_SUCCESS,
+  TEACHER_TIMETABLE_FAIL,
+  TEACHER_SCHOOL_REQUEST,
+  TEACHER_SCHOOL_SUCCESS,
+  TEACHER_SCHOOL_FAIL,
 } from '../constants/teacherConstants'
 
 export const teacherLoginReducer = (state = {}, action) => {
@@ -336,6 +349,85 @@ export const teacherAverageMarksReducer = (
       return { loading: false, error: action.payload }
     case TEACHER_AVERAGE_MARKS_DELETE:
       return { loading: false, averageMarks: {} }
+    default:
+      return state
+  }
+}
+
+export const teacherTimetableReducer = (
+  state = { periods: {} },
+  action
+) => {
+  switch (action.type) {
+    case TEACHER_TIMETABLE_REQUEST:
+      return { loading: true, periods: {} }
+    case TEACHER_TIMETABLE_SUCCESS:
+      return { loading: false, periods: action.payload }
+    case TEACHER_TIMETABLE_FAIL:
+      return { loading: false, error: action.payload }
+    default:
+      return state
+  }
+}
+
+export const teacherSchoolReducer = (
+  state = { school: {} },
+  action
+) => {
+  switch (action.type) {
+    case TEACHER_SCHOOL_REQUEST:
+      return { loading: true, school: {} }
+    case TEACHER_SCHOOL_SUCCESS:
+      return { loading: false, school: action.payload }
+    case TEACHER_SCHOOL_FAIL:
+      return { loading: false, error: action.payload, school: {} }
+    default:
+      return state
+  }
+}
+
+export const teacherFinalMarksReducer = (
+  state = { finalMarks: {} },
+  action
+) => {
+  switch (action.type) {
+    case TEACHER_FINAL_MARKS_REQUEST:
+      return { loading: true, finalMarks: {} }
+    case TEACHER_FINAL_MARKS_SUCCESS:
+      return { loading: false, finalMarks: action.payload }
+    case TEACHER_FINAL_MARKS_FAIL:
+      return { loading: false, error: action.payload, finalMarks: {} }
+    default:
+      return state
+  }
+}
+
+export const teacherAddFinalMarkReducer = (
+  state = { addFinalMark: {} },
+  action
+) => {
+  switch (action.type) {
+    case TEACHER_ADD_FINAL_MARK_REQUEST:
+      return { loading: true, addFinalMark: {}, flag: false }
+    case TEACHER_ADD_FINAL_MARK_SUCCESS:
+      return {
+        loading: false,
+        addFinalMark: action.payload,
+        flag: true,
+      }
+    case TEACHER_ADD_FINAL_MARK_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+        addFinalMark: {},
+        flag: false,
+      }
+    case TEACHER_ADD_FINAL_MARK_DELETE:
+      return {
+        loading: false,
+        addFinalMark: {},
+        flag: false,
+      }
     default:
       return state
   }

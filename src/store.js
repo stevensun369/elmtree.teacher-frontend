@@ -20,6 +20,10 @@ import {
   teacherHomeroomAverageMarksReducer,
   teacherHomeroomTermMarksReducer,
   teacherHomeroomAddTermMarkReducer,
+  teacherTimetableReducer,
+  teacherSchoolReducer,
+  teacherFinalMarksReducer,
+  teacherAddFinalMarkReducer,
 } from './reducers/teacherReducers'
 
 // trying the post message thingie
@@ -35,6 +39,8 @@ const reducer = combineReducers({
   teacherMotivateTruancy: teacherMotivateTruancyReducer,
   teacherAddAverage: teacherAddAverageReducer,
   teacherAverageMarks: teacherAverageMarksReducer,
+  teacherFinalMarks: teacherFinalMarksReducer,
+  teacherAddFinalMark: teacherAddFinalMarkReducer,
 
   // homeroom teacher reducers
   teacherHomeroomStudents: teacherHomeroomStudentsReducer,
@@ -43,6 +49,8 @@ const reducer = combineReducers({
   teacherHomeroomAddTermMark: teacherHomeroomAddTermMarkReducer,
   teacherHomeroomStudentSubjects:
     teacherHomeroomStudentSubjectsReducer,
+  teacherTimetable: teacherTimetableReducer,
+  teacherSchool: teacherSchoolReducer,
 })
 
 const userTypeFromStorage = localStorage.getItem('userType')
@@ -104,7 +112,7 @@ window.onload = () => {
     console.log(requestData.userType)
 
     if (requestData.userType !== 'teacher' && requestData.userType) {
-      window.location.replace(authURL + '/#/redirect')
+      window.location.replace(authURL + '/#/')
     }
 
     var teacherID = localStorage.getItem('userInfo')

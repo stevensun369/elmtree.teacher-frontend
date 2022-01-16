@@ -159,7 +159,6 @@ const TeacherHomeroomStudentSubjectScreen = ({ match, history }) => {
     dispatch,
     match.params.subjectID,
     match.params.studentID,
-    averageMarks,
     authorized,
   ])
 
