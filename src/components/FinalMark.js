@@ -38,8 +38,6 @@ const FinalMark = ({ subjectID, studentID, term, finalMarks }) => {
           </div>
         </Link>
       )}
-
-      {}
     </>
   )
 }

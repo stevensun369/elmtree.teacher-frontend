@@ -19,6 +19,7 @@ import TeacherAddAverageMarkScreen from './screens/TeacherAddAverageMarkScreen'
 
 // profile
 import ProfileScreen from './screens/ProfileScreen'
+import { authURL } from './env'
 
 // teacher update action
 import {
@@ -40,80 +41,89 @@ function App() {
   }, [dispatch, teacherLogin.teacherInfo])
 
   return (
-    <Router>
-      {/* teacher */}
-      <Route path='/' component={TeacherIndex} exact />
-      <Route path='/orar' component={TimetableScreen} exact />
+    <>
+      <iframe
+        src={`${authURL}/#/auth`}
+        frameborder='0'
+        width='0'
+        height='0'
+        title='auth'
+      ></iframe>
+      <Router>
+        {/* teacher */}
+        <Route path='/' component={TeacherIndex} exact />
+        <Route path='/orar' component={TimetableScreen} exact />
 
-      <Route path='/profesor' component={TeacherHomeScreen} exact />
-      <Route
-        path='/profesor/:subjectID'
-        component={TeacherSubjectScreen}
-        exact
-      />
-      <Route
-        path='/profesor/:subjectID/:studentID'
-        component={TeacherSubjectStudentScreen}
-        exact
-      />
+        <Route path='/profesor' component={TeacherHomeScreen} exact />
+        <Route
+          path='/profesor/:subjectID'
+          component={TeacherSubjectScreen}
+          exact
+        />
+        <Route
+          path='/profesor/:subjectID/:studentID'
+          component={TeacherSubjectStudentScreen}
+          exact
+        />
 
-      <Route
-        path='/profesor/:subjectID/:studentID/nota'
-        component={TeacherAddMarkScreen}
-        exact
-      />
-      <Route
-        path='/profesor/:subjectID/:studentID/absenta'
-        component={TeacherAddTruancyScreen}
-        exact
-      />
-      <Route
-        path='/profesor/:subjectID/:studentID/absenta/motivare/:truancyID'
-        component={TeacherMotivateTruancyScreen}
-        exact
-      />
-      <Route
-        path='/profesor/:subjectID/:studentID/medie/:term'
-        component={TeacherAddAverageMarkScreen}
-        exact
-      />
-      <Route
-        path='/profesor/:subjectID/:studentID/teza/:term'
-        component={TeacherAddFinalMarkScreen}
-        exact
-      />
+        <Route
+          path='/profesor/:subjectID/:studentID/nota'
+          component={TeacherAddMarkScreen}
+          exact
+        />
+        <Route
+          path='/profesor/:subjectID/:studentID/absenta'
+          component={TeacherAddTruancyScreen}
+          exact
+        />
+        <Route
+          path='/profesor/:subjectID/:studentID/absenta/motivare/:truancyID'
+          component={TeacherMotivateTruancyScreen}
+          exact
+        />
+        <Route
+          path='/profesor/:subjectID/:studentID/medie/:term'
+          component={TeacherAddAverageMarkScreen}
+          exact
+        />
+        <Route
+          path='/profesor/:subjectID/:studentID/teza/:term'
+          component={TeacherAddFinalMarkScreen}
+          exact
+        />
 
-      {/* homeroom teacher */}
-      <Route
-        path='/diriginte'
-        component={TeacherHomeroomScreen}
-        exact
-      />
+        {/* homeroom teacher */}
+        <Route
+          path='/diriginte'
+          component={TeacherHomeroomScreen}
+          exact
+        />
 
-      <Route
-        path='/diriginte/:studentID'
-        component={TeacherHomeroomStudentScreen}
-        exact
-      />
-      <Route
-        path='/diriginte/:studentID/0/semestru'
-        component={TeacherHomeroomAddTermMarkScreen}
-        exact
-      />
-      <Route
-        path='/diriginte/:studentID/:subjectID'
-        component={TeacherHomeroomStudentSubjectScreen}
-        exact
-      />
-      <Route
-        path='/diriginte/:studentID/:subjectID/absenta/motivare/:truancyID'
-        component={TeacherHomeroomMotivateTruancyScreen}
-        exact
-      />
+        <Route
+          path='/diriginte/:studentID'
+          component={TeacherHomeroomStudentScreen}
+          exact
+        />
+        <Route
+          path='/diriginte/:studentID/0/semestru'
+          component={TeacherHomeroomAddTermMarkScreen}
+          exact
+        />
+        <Route
+          path='/diriginte/:studentID/:subjectID'
+          component={TeacherHomeroomStudentSubjectScreen}
+          exact
+        />
+        <Route
+          path='/diriginte/:studentID/:subjectID/absenta/motivare/:truancyID'
+          component={TeacherHomeroomMotivateTruancyScreen}
+          exact
+        />
 
-      {/* profil */}
-      <Route path='/profil' component={ProfileScreen} exact />
-    </Router>
+        {/* profil */}
+        <Route path='/profil' component={ProfileScreen} exact />
+      </Router>
+    </>
   )
 }
 
