@@ -6,9 +6,11 @@ import {
   getHomeroomStudents,
   motivateTruancyDelete,
   getHomeroomAverageMarks,
+  getFinalMarks,
 } from '../actions/teacherActions'
 import HeaderBack from '../components/HeaderBack'
-import SubjectStudentMark from '../components/Mark'
+import Mark from '../components/Mark'
+import FinalMark from '../components/FinalMark'
 import Loader from '../components/Loader'
 import NotAuthorized from '../components/NotAuthorized'
 import {
@@ -61,6 +63,12 @@ const TeacherHomeroomStudentSubjectScreen = ({ match, history }) => {
     (state) => state.teacherHomeroomStudents
   )
   const { homeroomStudentsList } = teacherHomeroomStudents
+
+  // final marks
+  const teacherFinalMarks = useSelector(
+    (state) => state.teacherFinalMarks
+  )
+  const { finalMarks } = teacherFinalMarks
 
   var subjectStudentInfo = sortStudentInfo(
     homeroomStudentsList,
@@ -154,6 +162,10 @@ const TeacherHomeroomStudentSubjectScreen = ({ match, history }) => {
           match.params.studentID
         )
       )
+
+      dispatch(
+        getFinalMarks(match.params.subjectID, match.params.studentID)
+      )
     }
   }, [
     dispatch,
@@ -218,14 +230,23 @@ const TeacherHomeroomStudentSubjectScreen = ({ match, history }) => {
                 {marksTermOne.length > 0 ? (
                   <>
                     {marksTermOne.map((item) => (
-                      <SubjectStudentMark
+                      <Mark
                         dateDay={item.dateDay}
                         dateMonth={item.dateMonth}
                         key={item.markID}
                       >
                         {item.value}
-                      </SubjectStudentMark>
+                      </Mark>
                     ))}
+
+                    {finalMarks[1] && (
+                      <FinalMark
+                        subjectID={match.params.subjectID}
+                        studentID={match.params.studentID}
+                        term='1'
+                        finalMarks={finalMarks}
+                      />
+                    )}
                   </>
                 ) : (
                   <span className={styles.notExist}>
@@ -276,14 +297,23 @@ const TeacherHomeroomStudentSubjectScreen = ({ match, history }) => {
                 {marksTermTwo.length > 0 ? (
                   <>
                     {marksTermTwo.map((item) => (
-                      <SubjectStudentMark
+                      <Mark
                         dateDay={item.dateDay}
                         dateMonth={item.dateMonth}
                         key={item.markID}
                       >
                         {item.value}
-                      </SubjectStudentMark>
+                      </Mark>
                     ))}
+
+                    {finalMarks[2] && (
+                      <FinalMark
+                        subjectID={match.params.subjectID}
+                        studentID={match.params.studentID}
+                        term='1'
+                        finalMarks={finalMarks}
+                      />
+                    )}
                   </>
                 ) : (
                   <span className={styles.notExist}>

@@ -197,7 +197,7 @@ export const getHomeroomAverageMarks =
       }
 
       const { data } = await axios.get(
-        `${apiURL}/api/teacher/homeroom/average`,
+        `${apiURL}/api/teacher/homeroom/averagemarks`,
         config
       )
 
@@ -261,7 +261,7 @@ export const getHomeroomTermMarks =
       }
 
       const { data } = await axios.get(
-        `${apiURL}/api/teacher/homeroom/term`,
+        `${apiURL}/api/teacher/homeroom/termmarks`,
         config
       )
 
@@ -322,7 +322,7 @@ export const addHomeroomTermMark =
       }
 
       const { data } = await axios.post(
-        `${apiURL}/api/teacher/homeroom/term`,
+        `${apiURL}/api/teacher/homeroom/termmarks`,
         { studentID, term },
         config
       )
@@ -363,7 +363,7 @@ export const getHomeroomStudentSubjectsList =
       }
 
       const { data } = await axios.get(
-        `${apiURL}/api/teacher/homeroom/${studentID}`,
+        `${apiURL}/api/teacher/homeroom/subjects/${studentID}`,
         config
       )
 
@@ -456,7 +456,7 @@ export const getSubjectStudentMarksList =
       }
 
       const { data } = await axios.get(
-        `${apiURL}/api/teacher/mark/${subjectID}/${studentID}`,
+        `${apiURL}/api/teacher/marks/${subjectID}/${studentID}`,
         config
       )
 
@@ -490,7 +490,7 @@ export const getSubjectStudentTruancysList =
       }
 
       const { data } = await axios.get(
-        `${apiURL}/api/teacher/truancy/${subjectID}/${studentID}`,
+        `${apiURL}/api/teacher/truancies/${subjectID}/${studentID}`,
         config
       )
 
@@ -535,7 +535,7 @@ export const addMark =
       }
 
       const { data } = await axios.post(
-        `${apiURL}/api/teacher/mark`,
+        `${apiURL}/api/teacher/marks`,
         { value, date, subjectID, studentID },
         config
       )
@@ -576,7 +576,7 @@ export const addTruancy =
       }
 
       const { data } = await axios.post(
-        `${apiURL}/api/teacher/truancy`,
+        `${apiURL}/api/teacher/truancies`,
         { date, subjectID, studentID },
         config
       )
@@ -617,7 +617,7 @@ export const motivateTruancy =
       }
 
       const { data } = await axios.put(
-        `${apiURL}/api/teacher/truancy/motivate`,
+        `${apiURL}/api/teacher/truancies`,
         { truancyID },
         config
       )
@@ -658,7 +658,7 @@ export const addAverage =
       }
 
       const { data } = await axios.post(
-        `${apiURL}/api/teacher/average`,
+        `${apiURL}/api/teacher/averagemarks`,
         { subjectID, studentID, term },
         config
       )
@@ -699,7 +699,7 @@ export const getAverageMarks =
       }
 
       const { data } = await axios.get(
-        `${apiURL}/api/teacher/average/${subjectID}`,
+        `${apiURL}/api/teacher/averagemarks/${subjectID}`,
         config
       )
 
@@ -834,7 +834,7 @@ export const getFinalMarks =
       }
 
       const { data } = await axios.get(
-        `${apiURL}/api/teacher/final/${subjectID}/${studentID}`,
+        `${apiURL}/api/teacher/finalmarks/${subjectID}/${studentID}`,
         config
       )
 
@@ -886,7 +886,7 @@ export const addFinalMark =
       }
 
       const { data } = await axios.post(
-        `${apiURL}/api/teacher/final`,
+        `${apiURL}/api/teacher/finalmarks`,
         { value, subjectID, studentID, term },
         config
       )
