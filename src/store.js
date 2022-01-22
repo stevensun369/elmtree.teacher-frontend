@@ -24,6 +24,8 @@ import {
   teacherSchoolReducer,
   teacherFinalMarksReducer,
   teacherAddFinalMarkReducer,
+  teacherHomeroomTimetableReducer,
+  teacherHomeroomTimetableTeachersReducer,
 } from './reducers/teacherReducers'
 
 // trying the post message thingie
@@ -49,6 +51,10 @@ const reducer = combineReducers({
   teacherHomeroomAddTermMark: teacherHomeroomAddTermMarkReducer,
   teacherHomeroomStudentSubjects:
     teacherHomeroomStudentSubjectsReducer,
+  teacherHomeroomTimetable: teacherHomeroomTimetableReducer,
+  teacherHomeroomTimetableTeachers:
+    teacherHomeroomTimetableTeachersReducer,
+
   teacherTimetable: teacherTimetableReducer,
   teacherSchool: teacherSchoolReducer,
 })

@@ -156,3 +156,37 @@ input[type='radio'] {
   pointer-events: none;
   opacity: 0.75;
 }
+
+/*homeroom*/
+.homeroomInputValue {
+  width: 100%;
+  height: calc(var(--header-height) / 1.25);
+  border: none;
+  background: lightgray;
+  border-radius: 0;
+
+  display: block;
+
+  padding-left: 2vh;
+
+  color: var(--green);
+  border: 1px solid lightgray;
+
+  margin-bottom: 2vh;
+}
+
+.homeroomInputValue::placeholder {
+  color: var(--green);
+}
+
+.homeroomInputValue:focus {
+  border-radius: 0;
+  border: 1px solid var(--green);
+  outline: none;
+}
+
+.homeroomInputValue:active {
+  border-radius: 0;
+  border: 1px solid var(--green);
+  outline: none;
+}

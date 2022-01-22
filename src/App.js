@@ -27,6 +27,7 @@ import {
   getStudentsList,
 } from './actions/teacherActions'
 import TeacherAddFinalMarkScreen from './screens/TeacherAddFinalMarkScreen'
+import TeacherHomeroomTimetableScreen from './screens/TeacherHomeroomTimetableScreen'
 
 function App() {
   const dispatch = useDispatch()
@@ -98,7 +99,11 @@ function App() {
           component={TeacherHomeroomScreen}
           exact
         />
-
+        <Route
+          path='/orar/diriginte'
+          component={TeacherHomeroomTimetableScreen}
+          exact
+        />
         <Route
           path='/diriginte/:studentID'
           component={TeacherHomeroomStudentScreen}

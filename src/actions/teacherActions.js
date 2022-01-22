@@ -25,6 +25,12 @@ import {
   TEACHER_HOMEROOM_STUDENT_SUBJECTS_REQUEST,
   TEACHER_HOMEROOM_STUDENT_SUBJECTS_SUCCESS,
   TEACHER_HOMEROOM_STUDENT_SUBJECTS_FAIL,
+  TEACHER_HOMEROOM_TIMETABLE_REQUEST,
+  TEACHER_HOMEROOM_TIMETABLE_SUCCESS,
+  TEACHER_HOMEROOM_TIMETABLE_FAIL,
+  TEACHER_HOMEROOM_TIMETABLE_TEACHERS_REQUEST,
+  TEACHER_HOMEROOM_TIMETABLE_TEACHERS_SUCCESS,
+  TEACHER_HOMEROOM_TIMETABLE_TEACHERS_FAIL,
   TEACHER_SUBJECT_STUDENT_MARKS_REQUEST,
   TEACHER_SUBJECT_STUDENT_MARKS_SUCCESS,
   TEACHER_SUBJECT_STUDENT_MARKS_FAIL,
@@ -374,6 +380,114 @@ export const getHomeroomStudentSubjectsList =
     } catch (error) {
       dispatch({
         type: TEACHER_HOMEROOM_STUDENT_SUBJECTS_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      })
+    }
+  }
+
+export const getHomeroomTimetable =
+  () => async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: TEACHER_HOMEROOM_TIMETABLE_REQUEST,
+      })
+
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${getState().teacherLogin.token}`,
+        },
+      }
+
+      const { data } = await axios.get(
+        `${apiURL}/api/teacher/homeroom/timetable`,
+        config
+      )
+
+      var days = [1, 2, 3, 4, 5]
+      // var intervals = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
+      var periods = {}
+
+      for (var dayKey in days) {
+        var day = days[dayKey]
+        periods[day] = {}
+      }
+
+      for (var key in data) {
+        var period = data[key]
+        periods[period.day][period.interval] = period
+      }
+
+      dispatch({
+        type: TEACHER_HOMEROOM_TIMETABLE_SUCCESS,
+        payload: periods,
+      })
+    } catch (error) {
+      dispatch({
+        type: TEACHER_HOMEROOM_TIMETABLE_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      })
+    }
+  }
+
+export const getHomeroomTimetableTeachers =
+  () => async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: TEACHER_HOMEROOM_TIMETABLE_TEACHERS_REQUEST,
+      })
+
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${getState().teacherLogin.token}`,
+        },
+      }
+
+      const { data } = await axios.get(
+        `${apiURL}/api/teacher/homeroom/timetable/teachers`,
+        config
+      )
+
+      let subjectList = data.subjects
+      let subjectIDList = []
+      for (let subject in subjectList) {
+        subjectIDList.push(subjectList[subject].subjectID)
+      }
+
+      var teachers = {}
+      for (var subjectID in subjectIDList) {
+        teachers[subjectIDList[subjectID]] = []
+      }
+
+      for (let subjectIDIndex in subjectIDList) {
+        let subjectID = subjectIDList[subjectIDIndex]
+        for (let teacherIndex in data.teachers) {
+          let teacher = data.teachers[teacherIndex]
+          for (let subjectIndex in teacher.subjectList) {
+            let subject = teacher.subjectList[subjectIndex]
+            if (subject.subjectID === subjectID) {
+              teachers[subject.subjectID].push(
+                teacher.firstName + ' ' + teacher.lastName
+              )
+            }
+          }
+        }
+      }
+
+      dispatch({
+        type: TEACHER_HOMEROOM_TIMETABLE_TEACHERS_SUCCESS,
+        payload: teachers,
+      })
+    } catch (error) {
+      dispatch({
+        type: TEACHER_HOMEROOM_TIMETABLE_TEACHERS_FAIL,
         payload:
           error.response && error.response.data.message
             ? error.response.data.message

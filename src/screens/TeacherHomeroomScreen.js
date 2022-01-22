@@ -9,6 +9,7 @@ import HeaderBack from '../components/HeaderBack'
 import SubjectItem from '../components/SubjectItem'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
+import { Link } from 'react-router-dom'
 
 import NotAuthorized from '../components/NotAuthorized'
 import { protectHomeroom } from '../utils/homeroomProtect'
@@ -62,6 +63,12 @@ const TeacherHomeroomScreen = ({ history }) => {
         <HeaderBack backTo='/profesor'>Dirigenție</HeaderBack>
         <div className='header-margin-bottom'></div>
         <div className='main-container'>
+          <Link to={`/orar/diriginte`}>
+            <div className='toTimetable'>
+              <span>&gt;&gt; către orar</span>
+            </div>
+          </Link>
+          <div style={{ marginTop: '2vh' }}></div>
           <div className='list-divider'></div>
           {loading && <Loader />}
           {error ? (

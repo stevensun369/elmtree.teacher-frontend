@@ -22,6 +22,12 @@ import {
   TEACHER_HOMEROOM_STUDENT_SUBJECTS_REQUEST,
   TEACHER_HOMEROOM_STUDENT_SUBJECTS_SUCCESS,
   TEACHER_HOMEROOM_STUDENT_SUBJECTS_FAIL,
+  TEACHER_HOMEROOM_TIMETABLE_REQUEST,
+  TEACHER_HOMEROOM_TIMETABLE_SUCCESS,
+  TEACHER_HOMEROOM_TIMETABLE_FAIL,
+  TEACHER_HOMEROOM_TIMETABLE_TEACHERS_REQUEST,
+  TEACHER_HOMEROOM_TIMETABLE_TEACHERS_SUCCESS,
+  TEACHER_HOMEROOM_TIMETABLE_TEACHERS_FAIL,
   TEACHER_STUDENTS_REQUEST,
   TEACHER_STUDENTS_SUCCESS,
   TEACHER_STUDENTS_FAIL,
@@ -217,6 +223,38 @@ export const teacherHomeroomAddTermMarkReducer = (
       return { ...state, loading: false, error: action.payload }
     case TEACHER_HOMEROOM_ADD_TERM_MARK_DELETE:
       return { loading: false, termMark: {} }
+    default:
+      return state
+  }
+}
+
+export const teacherHomeroomTimetableReducer = (
+  state = { periods: [] },
+  action
+) => {
+  switch (action.type) {
+    case TEACHER_HOMEROOM_TIMETABLE_REQUEST:
+      return { loading: true, periods: [] }
+    case TEACHER_HOMEROOM_TIMETABLE_SUCCESS:
+      return { loading: false, periods: action.payload }
+    case TEACHER_HOMEROOM_TIMETABLE_FAIL:
+      return { loading: false, error: action.payload }
+    default:
+      return state
+  }
+}
+
+export const teacherHomeroomTimetableTeachersReducer = (
+  state = { teachers: [] },
+  action
+) => {
+  switch (action.type) {
+    case TEACHER_HOMEROOM_TIMETABLE_TEACHERS_REQUEST:
+      return { loading: true, teachers: [] }
+    case TEACHER_HOMEROOM_TIMETABLE_TEACHERS_SUCCESS:
+      return { loading: false, teachers: action.payload }
+    case TEACHER_HOMEROOM_TIMETABLE_TEACHERS_FAIL:
+      return { loading: false, error: action.payload }
     default:
       return state
   }
