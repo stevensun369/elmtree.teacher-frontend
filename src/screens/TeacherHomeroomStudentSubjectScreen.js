@@ -10,9 +10,9 @@ import {
 } from '../actions/teacherActions'
 import HeaderBack from '../components/HeaderBack'
 import Mark from '../components/Mark'
-import FinalMark from '../components/FinalMark'
 import Loader from '../components/Loader'
 import NotAuthorized from '../components/NotAuthorized'
+import FinalMarkRead from '../components/FinalMarkRead'
 import {
   protectHomeroom,
   protectHomeroomStudentID,
@@ -240,7 +240,7 @@ const TeacherHomeroomStudentSubjectScreen = ({ match, history }) => {
                     ))}
 
                     {finalMarks[1] && (
-                      <FinalMark
+                      <FinalMarkRead
                         subjectID={match.params.subjectID}
                         studentID={match.params.studentID}
                         term='1'
@@ -307,7 +307,7 @@ const TeacherHomeroomStudentSubjectScreen = ({ match, history }) => {
                     ))}
 
                     {finalMarks[2] && (
-                      <FinalMark
+                      <FinalMarkRead
                         subjectID={match.params.subjectID}
                         studentID={match.params.studentID}
                         term='1'
