@@ -1,7 +1,4 @@
 import {
-  TEACHER_LOGIN_REQUEST,
-  TEACHER_LOGIN_SUCCESS,
-  TEACHER_LOGIN_FAIL,
   TEACHER_UPDATE,
   TEACHER_READ_LS,
   TEACHER_LOGOUT,
@@ -77,24 +74,6 @@ import {
 
 export const teacherLoginReducer = (state = {}, action) => {
   switch (action.type) {
-    case TEACHER_LOGIN_REQUEST:
-      return { loading: true }
-    case TEACHER_LOGIN_SUCCESS:
-      const teacherInfoDestructure = {
-        teacherID: action.payload.teacherID,
-        firstName: action.payload.firstName,
-        lastName: action.payload.lastName,
-        cnp: action.payload.cnp,
-      }
-      return {
-        loading: false,
-        teacherInfo: teacherInfoDestructure,
-        homeroomGrade: action.payload.homeroomGrade,
-        subjectList: action.payload.subjectList,
-        token: action.payload.token,
-      }
-    case TEACHER_LOGIN_FAIL:
-      return { loading: false, error: action.payload }
     case TEACHER_UPDATE:
       return {
         ...state,
@@ -107,7 +86,6 @@ export const teacherLoginReducer = (state = {}, action) => {
         teacherID: action.payload.teacherID,
         firstName: action.payload.firstName,
         lastName: action.payload.lastName,
-        cnp: action.payload.cnp,
       }
       return {
         ...state,

@@ -1,7 +1,4 @@
 import {
-  TEACHER_LOGIN_REQUEST,
-  TEACHER_LOGIN_SUCCESS,
-  TEACHER_LOGIN_FAIL,
   TEACHER_UPDATE,
   TEACHER_LOGOUT,
   TEACHER_STUDENTS_REQUEST,
@@ -75,42 +72,6 @@ import {
 } from '../constants/teacherConstants'
 import { apiURL } from '../env'
 import axios from 'axios'
-
-export const login = (cnp, password) => async (dispatch) => {
-  try {
-    dispatch({
-      type: TEACHER_LOGIN_REQUEST,
-    })
-
-    const config = {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    }
-
-    const { data } = await axios.post(
-      `${apiURL}/api/teacher/login`,
-      { cnp, password },
-      config
-    )
-
-    dispatch({
-      type: TEACHER_LOGIN_SUCCESS,
-      payload: data,
-    })
-
-    localStorage.setItem('userInfo', JSON.stringify(data))
-    localStorage.setItem('userType', 'teacher')
-  } catch (error) {
-    dispatch({
-      type: TEACHER_LOGIN_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
-    })
-  }
-}
 
 export const teacherUpdate = () => async (dispatch, getState) => {
   try {
