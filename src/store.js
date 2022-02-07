@@ -78,6 +78,7 @@ if (userTypeFromStorage === 'teacher') {
     teacherID: teacherLoggedIn.teacherID,
     firstName: teacherLoggedIn.firstName,
     lastName: teacherLoggedIn.lastName,
+    email: teacherLoggedIn.email,
     // token: teacherLoggedIn.token,
   }
   teacherLoggedInHomeroomGrade = teacherLoggedIn.homeroomGrade

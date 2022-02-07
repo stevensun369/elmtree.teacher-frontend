@@ -86,6 +86,7 @@ export const teacherLoginReducer = (state = {}, action) => {
         teacherID: action.payload.teacherID,
         firstName: action.payload.firstName,
         lastName: action.payload.lastName,
+        email: action.payload.email,
       }
       return {
         ...state,
